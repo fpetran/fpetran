@@ -1,0 +1,53 @@
+# Copyright 2011 Florian Petran
+# Distributed under the terms of the GNU General Public License v2
+
+SUMMARY="Power management and controlling of most APC UPS models."
+HOMEPAGE="http://www.apcupsd.com/"
+
+DOWNLOADS="http://sourceforge.net/projects/${PN}/files/apcupsd%20-%20Stable/${PV}/${PNV}.tar.gz"
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="usb [[ description = [ Adds support for UPS with USB cable ] ]]
+           gnome [[ description = [ Build gnome based GUI ] ]]
+           cgi [[ description = [ Build browser based GUI ] ]]
+           snmp"
+DEPENDENCIES="
+    build+run:
+        cgi? ( media-libs/gd[>=1.8.4] )
+        gnome? ( x11-libs/gtk+[>=2.4.0]
+                 dev-libs/glib:2
+                 gnome-platform/GConf[>=2.0] )
+"
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}/apcupsd-autoconf-path.patch" )
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( usb snmp "gnome gapcmon" )
+
+src_configure() {
+
+    econf \
+        --hates=docdir \
+        --sbindir=/sbin \
+        --sysconfdir=/etc/apcupsd \
+        --with-pwrfail-dir=/etc/apcupsd \
+        --with-lock-dir=/var/lock \
+        --with-pid-dir=/var/run \
+        --with-log-dir=/var/log \
+        --with-nis-port=3551 \
+        --enable-net \
+        --enable-pcnet \
+        $(for s in "${DEFAULT_SRC_CONFIGURE_OPTION_ENABLES[@]}" ; do \
+            option_enable ${s} ; \
+        done) \
+        $(if option usb; then \
+            echo "--with-upstype=usb --with-upscable=usb --with-dev= "; \
+        else \
+            echo "--with-upstype=apcsmart --with-upscable=smart"; \
+        fi)\
+        $(if option cgi; then \
+            option_enable cgi; \
+            echo "--with-cgi-bin=/usr/libexec/${PN}/cgi-bin"; \
+        fi) \
+        APCUPSD_MAIL=/bin/mail
+
+}

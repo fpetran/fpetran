@@ -1,0 +1,129 @@
+# Copyright 2011 Florian Petran
+# Distributed under the terms of the GNU General Public License v2
+#   based upon 'nx-3.4.0-r3.ebuild', which is:
+#   Copyright 1999-2011 Gentoo Foundation
+
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.11 ] ] multilib
+
+SUMMARY="Nomachine NX compression core libraries"
+HOMEPAGE="http://www.nomachine.com/documents.php"
+
+NOMACHINE_BASE="http://web04.nomachine.com/download/${PV}/sources"
+
+DOWNLOADS="
+    ${NOMACHINE_BASE}/nx-X11-${PV}-3.tar.gz
+    ${NOMACHINE_BASE}/nxagent-${PV}-11.tar.gz
+    ${NOMACHINE_BASE}/nxauth-${PV}-1.tar.gz
+    ${NOMACHINE_BASE}/nxcomp-${PV}-1.tar.gz
+    ${NOMACHINE_BASE}/nxcompext-${PV}-1.tar.gz
+    ${NOMACHINE_BASE}/nxcompshad-${PV}-3.tar.gz
+    ${NOMACHINE_BASE}/nxproxy-${PV}-2.tar.gz
+"
+
+LICENCES="GPL-0"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        x11-utils/gccmakedep
+        x11-utils/imake
+        x11-proto/inputproto
+    build+run:
+        x11-libs/libXau
+        x11-libs/libXcomposite
+        x11-libs/libXdamage
+        x11-libs/libXdmcp
+        x11-libs/libXpm
+        x11-libs/libXrandr
+        x11-libs/libXtst
+        media-libs/jpeg
+        media-libs/libpng[>=1.2.8]
+        sys-libs/zlib[>=1.2.3]
+"
+
+WORK=${WORKBASE}/${PN}-X11
+
+DEFAULT_SRC_CONFIGURE_PARAMS=( )
+DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( )
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( )
+
+src_prepare() {
+    cd "${WORKBASE}"/nxproxy
+    expatch -p0 "${FILES}"/${PN}-3.2.0-nxproxy_read_from_stdin.patch
+
+    cd "${WORKBASE}"/nxcomp
+    expatch -p0 "${FILES}"/${PN}-2.1.0-invalid-options.patch
+    expatch -p0 "${FILES}"/${PN}-3.3.0-nxcomp-glibc2.10.patch
+
+    cd "${WORKBASE}"
+    expatch -p0 "${FILES}"/nx-x11-1.5.0-tmp-exec.patch
+    expatch -p0 "${FILES}"/nxcomp-1.5.0-pic.patch
+    expatch -p0 "${FILES}"/${PN}-3.3.0-cflags.patch
+
+    for s in nxcomp nxcompext nxcompshad nxproxy; do
+        cd "${WORKBASE}"/${s}
+        eautoreconf ${s}
+        cd "${WORKBASE}"
+    done
+
+    echo "#define CcCmd ${CC}" >> "${WORK}"/config/cf/host.def
+    echo "#define OptimizedCDebugFlags ${CFLAGS} GccAliasingArgs" >> "${WORK}"/config/cf/host.def
+    echo "#define OptimizedCplusplusDebugFlags ${CXXFLAGS} GccAliasingArgs" >> "${WORK}"/config/cf/host.def
+
+    echo "#define ExtraLoadFlags ${LDFLAGS}" >> "${WORK}"/config/cf/host.def
+    echo "#define SharedLibraryLoadFlags -shared ${LDFLAGS}" >> "${WORK}"/config/cf/host.def
+}
+
+src_configure() {
+    for s in nxcomp nxcompshad nxproxy nxcompext; do
+        cd "${WORKBASE}"/${s} || die "No ${s} directory found"
+        econf --hates=docdir
+    done
+}
+
+src_compile() {
+    for s in nxcomp nxcompshad nxproxy; do
+        cd "${WORKBASE}"/${s} || die "No ${s} directory found"
+        emake
+    done
+
+    cd "${WORK}" || die "No nx-X11 directory found"
+    unset MAKE_OPTS
+    FAST=1 emake -j1 World WORLDOPTS="" MAKE="make"
+
+    cd "${WORKBASE}"/nxcompext || die "No nxcompext directory found"
+    emake
+}
+
+src_install() {
+    NX_ROOT=/usr/$(get_libdir)/NX
+
+    for x in nxagent nxauth nxproxy; do
+        herebin ${x} <<- EOF
+		#!/bin/sh
+		cd ${NX_ROOT}/bin
+		if [ -n ${NX_ROOT}/$(get_libdir) ]; then
+		    if [ "\${LD_LIBRARY_PATH+set}" = "set" ]; then
+		        export LD_LIBRARY_PATH="\${LD_LIBRARY_PATH}:${NX_ROOT}/$(get_libdir)"
+		    else
+		        export LD_LIBRARY_PATH="${NX_ROOT}/$(get_libdir)"
+		    fi
+		fi
+		exec ./${x} "\$@"
+		EOF
+    done
+
+    into ${NX_ROOT}
+    dobin "${WORK}"/programs/Xserver/nxagent
+    dobin "${WORK}"/programs/nxauth/nxauth
+    dobin "${WORKBASE}"/nxproxy/nxproxy
+
+    dolib "${WORK}"/lib/X11/libX11.so*
+    dolib "${WORK}"/lib/Xext/libXext.so*
+    dolib "${WORK}"/lib/Xrender/libXrender.so*
+    dolib "${WORKBASE}"/nxcomp/libXcomp.so*
+    dolib "${WORKBASE}"/nxcompext/libXcompext.so*
+    dolib "${WORKBASE}"/nxcompshad/libXcompshad.so*
+}

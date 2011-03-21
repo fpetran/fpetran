@@ -1,0 +1,22 @@
+--- nx-session-launcher/Makefile.orig	2011-03-18 16:40:30.587015000 +0000
++++ nx-session-launcher/Makefile	2011-03-18 16:40:46.040014998 +0000
+@@ -1,7 +1,6 @@
+ .PHONY: all install
+ 
+-CC=gcc
+-CFLAGS=-g -O2 -Wall -fPIC
++CFLAGS+=-fPIC
+ 
+ SOURCES = nx-session-launcher-suid.c
+ PROGRAMS = nx-session-launcher-suid
+--- nxredir/Makefile.orig	2011-03-18 16:42:57.005015002 +0000
++++ nxredir/Makefile	2011-03-18 16:44:28.152015001 +0000
+@@ -1,7 +1,6 @@
+ all: libnxredir.so.0
+ 
+-CC=gcc
+-CFLAGS=-g -O2 -Wall -fPIC
++CFLAGS+=-fPIC
+ LIBNAME=libnxredir.so.0
+ 
+ libnxredir.so.0: nxredir.o

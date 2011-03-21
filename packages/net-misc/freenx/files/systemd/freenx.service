@@ -1,0 +1,12 @@
+[Unit]
+Description=Allow users to get remote X connections via the freenx nxserver
+After=network.target
+
+[Service]
+ExecStartPre=/usr/bin/nxserver --cleanup >/dev/null 2>&1
+ExecStart=/usr/bin/nxserver --start >/dev/null 2>&1
+ExecStop=/usr/bin/nxserver --stop >/dev/null 2>&1
+ExecStopPost=/usr/bin/nxserver --cleanup >/dev/null 2>&1
+
+[Install]
+WantedBy=multi-user.target
