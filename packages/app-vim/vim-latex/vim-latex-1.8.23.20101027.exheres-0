@@ -1,0 +1,55 @@
+# Copyright 2011 Florian Petran
+# Distributed under the terms of the GNU General Public License v2
+# based upon 'vim-latex-1.8.23.20101027.ebuild' which is:
+#   Copyright 1999-2011 Gentoo Foundation
+
+require vim-plugin
+
+MY_PR="1112"
+MY_PNVR="${PN}-$(ever replace 3 -)-r${MY_PR}"
+
+SUMMARY="A comprehensive set of tools to view, edit and compile LaTeX documents without needing to
+ever quit Vim."
+HOMEPAGE="http://vim-latex.sourceforge.net/"
+DOWNLOADS="mirror://sourceforge/${PN}/${MY_PNVR}.tar.gz"
+
+LICENCES="vim"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="doc"
+
+DEFAULT_SRC_CONFIGURE_PARAMS=( )
+DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( )
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( )
+
+WORK="${WORKBASE}"/${MY_PNVR}
+
+src_prepare() {
+    rm Makefile Makefile.in || die "removing makefiles failed"
+}
+
+src_install() {
+    option doc && dodoc -r doc/
+
+    mv doc mydoc || die
+    mkdir doc || die
+    mv mydoc/*.txt doc || die
+    rm -fr mydoc || die
+
+    rm latextags ltags || die
+
+    vim-plugin_src_install
+
+    #edo chmod a+x /usr/share/vim/vimfiles/ftplugin/latex-suite/outline.py
+}
+
+pkg_postinst() {
+    vim-plugin_pkg_postinst
+
+    elog "To use vim-latex add the following to your .vimrc:"
+    elog
+    elog "  filetype plugin on"
+    elog "  set grepprg=grep\ -nH\ $*"
+    elog "  let g:tex_flavor='latex'"
+    elog
+}
