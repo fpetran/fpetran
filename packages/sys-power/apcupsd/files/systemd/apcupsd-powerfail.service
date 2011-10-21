@@ -1,0 +1,11 @@
+[Unit]
+Description=Power off UPC in case of shutdown due to power failure.
+DefaultDependencies=no
+Before=shutdown.target
+ConditionPathExists=/etc/apcupsd/powerfail
+
+[Service]
+Type=oneshot
+ExecStartPre=/usr/bin/logger APCUPSD will now power off the UPS.
+ExecStart=/sbin/apcupsd --killpower
+StandardOutput=syslog

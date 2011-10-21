@@ -1,0 +1,28 @@
+# Copyright 2011 Florian Petran
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake
+
+SUMMARY="KDE BibTex Reference Manager"
+HOMEPAGE="http://home.gna.org/kbibtex/"
+DOWNLOADS="http://download.gna.org/kbibtex/$(ever range 1-2)/${PNVR}.tar.bz2"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        kde/kdelibs:4
+"
+
+BUGS_TO=""
+
+DEFAULT_SRC_CONFIGURE_PARAMS=( )
+DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( )
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( )
+
+pkg_postinst() {
+    elog "You'll have to take care of installing a Latex/Bibtex distribution by yourself for now."
+}
