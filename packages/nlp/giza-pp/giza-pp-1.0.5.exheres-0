@@ -1,0 +1,41 @@
+# Copyright 2011 Florian Petran
+# Distributed under the terms of the GNU General Public License v2
+
+SUMMARY="A statistical machine translation toolkit and alignment tool."
+DESCRIPTION="
+GIZA++ is a statical machine translation toolkit that is used to train IBM Models 1-5 and an HMM word alignment model. This package also contains the source for the mkcls tool which generates the word classes necessary for training some of the alignment models.
+"
+HOMEPAGE="http://code.google.com/p/giza-pp"
+DOWNLOADS="http://${PN}.googlecode.com/files/${PN}-v${PV}.tar.gz"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="
+    trainGIZA [[ description = [ Use trainGIZA script for training the model ] ]]
+"
+
+DEPENDENCIES="
+    build:
+    build+run:
+    run:
+    trainGIZA? ( app-shells/tcsh )
+"
+
+BUGS_TO=""
+
+WORK="${WORKBASE}"/${PN}
+
+DEFAULT_SRC_CONFIGURE_PARAMS=( )
+DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( )
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( )
+
+src_install() {
+    dobin mkcls-v2/mkcls
+
+    cd "${WORK}"/GIZA++-v2
+
+    dobin GIZA++ plain2snt.out snt2cooc.out snt2plain.out
+    option trainGIZA && dobin GIZA++-v2/trainGIZA++.sh
+    emagicdocs
+}

@@ -1,0 +1,22 @@
+# Copyright 2011 Florian Petran
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'corefonts-1.exheres-0' which is
+#   Copyright 2008 Richard Brown
+
+SUMMARY="Junius-Unicode font for medievalists."
+HOMEPAGE="http://junicode.sourceforge.net/"
+DOWNLOADS="mirror://sourceforge/junicode/junicode-${PV//./-}.zip"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS=""
+
+WORK="${WORKBASE}"/${PN}
+
+src_install() {
+    cd ${WORK}/fonts
+    insinto /usr/share/fonts/X11/${PN}
+    doins *.ttf
+}
+
