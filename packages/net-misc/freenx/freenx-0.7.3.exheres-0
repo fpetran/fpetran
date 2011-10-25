@@ -3,7 +3,7 @@
 # based upon 'nxserver-freenx-0.7.3_p1040-r5.ebuild' which is:
 #    Copyright 1999-2010 Gentoo Foundation
 
-require multilib systemd-service
+require systemd-service
 
 SUMMARY="Free Software (GPL) Implementation of the NX Server"
 HOMEPAGE="http://freenx.berlios.de/"
@@ -12,24 +12,24 @@ DOWNLOADS="http://download.berlios.de/${PN}/${PN}-server-${PV}.tar.gz"
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS="nxclient [[ description = [ Use nxclient to display messages to clients ] ]]
-           baselayout
-           rdesktop
+MYOPTIONS="baselayout
+           nxclient [[ description = [ Use nxclient to display messages to clients ] ]]
+           rdesktop [[ description = [ Add support for the remote desktop protocol used by Windows Remote Desktop services ] ]]
 "
 
 DEPENDENCIES="
     build:
-        x11-utils/imake
         x11-utils/gccmakedep
+        x11-utils/imake
     build+run:
         dev-tcl/expect
-        sys-apps/gawk
         net-misc/netcat
+        net-misc/nx
         net-misc/openssh[pam]
+        sys-apps/gawk
+        x11-apps/sessreg
         x11-apps/xauth
         x11-apps/xrdb
-        x11-apps/sessreg
-        net-misc/nx
         nxclient? ( net-misc/nxclient )
         !nxclient? ( x11-apps/xmessage )
         rdesktop? ( net-remote/rdesktop )
@@ -37,7 +37,7 @@ DEPENDENCIES="
         user/nx
 "
 
-WORK=${WORKBASE}/${PN}-server-${PV}
+WORK="${WORKBASE}"/${PN}-server-${PV}
 
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/nxserver-freenx-${PV}_p104-pam_ssh.patch"
@@ -59,8 +59,8 @@ src_prepare() {
     expatch -p0 "${FILES}/nxloadconfig.patch"
     expatch -p0 "${FILES}/cflags.patch"
 
-    sed -e "/PATH_LIB=/s/lib/$(get_libdir)/g" \
-        -e "s#REAL_PATH_LIB#/usr/$(get_libdir)/NX/bin#" \
+    sed -e "/PATH_LIB=/s/lib/${LIBDIR}/g" \
+        -e "s#REAL_PATH_LIB#/usr/${LIBDIR}/NX/bin#" \
         -e "s#3.\[0123\].0#3.\[01234\].0#g" \
         -i nxloadconfig || die "nxloadconfig sed failed"
 }

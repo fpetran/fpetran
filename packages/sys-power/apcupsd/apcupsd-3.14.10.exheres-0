@@ -1,25 +1,23 @@
 # Copyright 2011 Florian Petran
 # Distributed under the terms of the GNU General Public License v2
 
-require systemd-service
+require systemd-service sourceforge [ project=apcupsd suffix=tar.gz ]
 
 SUMMARY="Power management and controlling of most APC UPS models."
-HOMEPAGE="http://www.apcupsd.com/"
 
-DOWNLOADS="http://sourceforge.net/projects/${PN}/files/apcupsd%20-%20Stable/${PV}/${PNV}.tar.gz"
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS="usb [[ description = [ Adds support for UPS with USB cable ] ]]
+MYOPTIONS="cgi [[ description = [ Build browser based GUI ] ]]
            gnome [[ description = [ Build gnome based GUI ] ]]
-           cgi [[ description = [ Build browser based GUI ] ]]
-           snmp"
+           snmp
+           usb [[ description = [ Adds support for UPS with USB cable ] ]]"
 DEPENDENCIES="
     build+run:
         cgi? ( media-libs/gd[>=1.8.4] )
-        gnome? ( x11-libs/gtk+[>=2.4.0]
-                 dev-libs/glib:2
-                 gnome-platform/GConf[>=2.0] )
+        gnome? ( dev-libs/glib:2
+                 gnome-platform/GConf[>=2.0]
+                 x11-libs/gtk+:=[>=2.4.0] )
 "
 
 src_configure() {

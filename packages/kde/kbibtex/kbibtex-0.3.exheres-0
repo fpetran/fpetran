@@ -17,12 +17,6 @@ DEPENDENCIES="
         kde/kdelibs:4
 "
 
-BUGS_TO=""
-
-DEFAULT_SRC_CONFIGURE_PARAMS=( )
-DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( )
-DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( )
-
 pkg_postinst() {
     elog "You'll have to take care of installing a Latex/Bibtex distribution by yourself for now."
 }

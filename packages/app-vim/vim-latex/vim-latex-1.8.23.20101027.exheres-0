@@ -3,24 +3,15 @@
 # based upon 'vim-latex-1.8.23.20101027.ebuild' which is:
 #   Copyright 1999-2011 Gentoo Foundation
 
-require vim-plugin
-
 MY_PR="1112"
-MY_PNVR="${PN}-$(ever replace 3 -)-r${MY_PR}"
+require vim-plugin sourceforge [ project=vim-latex suffix=tar.gz pnv=${PN}-$(ever replace 3 -)-r${MY_PR} ]
 
-SUMMARY="A comprehensive set of tools to view, edit and compile LaTeX documents without needing to
-ever quit Vim."
-HOMEPAGE="http://vim-latex.sourceforge.net/"
-DOWNLOADS="mirror://sourceforge/${PN}/${MY_PNVR}.tar.gz"
+SUMMARY="A comprehensive set of tools to view, edit and compile LaTeX documents."
 
 LICENCES="vim"
 SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS="doc"
-
-DEFAULT_SRC_CONFIGURE_PARAMS=( )
-DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( )
-DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( )
 
 WORK="${WORKBASE}"/${MY_PNVR}
 
@@ -31,16 +22,15 @@ src_prepare() {
 src_install() {
     option doc && dodoc -r doc/
 
-    mv doc mydoc || die
-    mkdir doc || die
-    mv mydoc/*.txt doc || die
-    rm -fr mydoc || die
+    edo mv doc mydoc
+    edo mkdir doc
+    edo mv mydoc/*.txt doc
+    edo rm -fr mydoc
 
-    rm latextags ltags || die
+    edo rm latextags ltags
 
     vim-plugin_src_install
 
-    #edo chmod a+x /usr/share/vim/vimfiles/ftplugin/latex-suite/outline.py
 }
 
 pkg_postinst() {

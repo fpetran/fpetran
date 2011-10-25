@@ -8,26 +8,20 @@ Singular Value Decomposition for matrixes. Basically the svdpackc program, but w
 HOMEPAGE="http://tedlab.mit.edu/~dr/SVDLIBC/"
 DOWNLOADS="http://tedlab.mit.edu/~dr/SVDLIBC/${PN}.tgz"
 
-LICENCES=""
+LICENCES="unspecified"
 SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS=""
 
-DEPENDENCIES="
-    build:
-    build+run:
-"
-BUGS_TO=""
-
-WORK="${WORKBASE}/SVDLIBC"
+WORK="${WORKBASE}"/SVDLIBC
 
 src_prepare() {
-    cd ${WORK}
+    cd "${WORK}"
     edo sed -i "s/gcc.\+$/gcc/" Makefile
 }
 
 src_compile() {
-    cd ${WORK}
+    cd "${WORK}"
     emake HOSTTYPE=linux
 }
 

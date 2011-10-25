@@ -3,7 +3,7 @@
 #   based upon 'nx-3.4.0-r3.ebuild', which is:
 #   Copyright 1999-2011 Gentoo Foundation
 
-require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.11 ] ] multilib
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.11 ] ]
 
 SUMMARY="Nomachine NX compression core libraries"
 HOMEPAGE="http://www.nomachine.com/documents.php"
@@ -20,7 +20,7 @@ DOWNLOADS="
     ${NOMACHINE_BASE}/nxproxy-${PV}-2.tar.gz
 "
 
-LICENCES="GPL-0"
+LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS=""
@@ -31,6 +31,9 @@ DEPENDENCIES="
         x11-utils/imake
         x11-proto/inputproto
     build+run:
+        media-libs/jpeg
+        media-libs/libpng[>=1.2.8]
+        sys-libs/zlib[>=1.2.3]
         x11-libs/libXau
         x11-libs/libXcomposite
         x11-libs/libXdamage
@@ -38,16 +41,9 @@ DEPENDENCIES="
         x11-libs/libXpm
         x11-libs/libXrandr
         x11-libs/libXtst
-        media-libs/jpeg
-        media-libs/libpng[>=1.2.8]
-        sys-libs/zlib[>=1.2.3]
 "
 
-WORK=${WORKBASE}/${PN}-X11
-
-DEFAULT_SRC_CONFIGURE_PARAMS=( )
-DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( )
-DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( )
+WORK="${WORKBASE}"/${PN}-X11
 
 src_prepare() {
     cd "${WORKBASE}"/nxproxy
@@ -98,17 +94,17 @@ src_compile() {
 }
 
 src_install() {
-    NX_ROOT=/usr/$(get_libdir)/NX
+    NX_ROOT=/usr/${LIBDIR}/NX
 
     for x in nxagent nxauth nxproxy; do
         herebin ${x} <<- EOF
 		#!/bin/sh
 		cd ${NX_ROOT}/bin
-		if [ -n ${NX_ROOT}/$(get_libdir) ]; then
+		if [ -n ${NX_ROOT}/${LIBDIR} ]; then
 		    if [ "\${LD_LIBRARY_PATH+set}" = "set" ]; then
-		        export LD_LIBRARY_PATH="\${LD_LIBRARY_PATH}:${NX_ROOT}/$(get_libdir)"
+		        export LD_LIBRARY_PATH="\${LD_LIBRARY_PATH}:${NX_ROOT}/${LIBDIR}"
 		    else
-		        export LD_LIBRARY_PATH="${NX_ROOT}/$(get_libdir)"
+		        export LD_LIBRARY_PATH="${NX_ROOT}/${LIBDIR}"
 		    fi
 		fi
 		exec ./${x} "\$@"
