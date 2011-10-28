@@ -4,7 +4,8 @@
 #   Copyright 1999-2011 Gentoo Foundation
 
 MY_PR="1112"
-require vim-plugin sourceforge [ project=vim-latex suffix=tar.gz pnv=${PN}-$(ever replace 3 -)-r${MY_PR} ]
+MY_PNVR=${PN}-$(ever replace 3 -)-r${MY_PR}
+require vim-plugin sourceforge [ project=vim-latex suffix=tar.gz pnv=${MY_PNVR} ]
 
 SUMMARY="A comprehensive set of tools to view, edit and compile LaTeX documents."
 
@@ -16,6 +17,7 @@ MYOPTIONS="doc"
 WORK="${WORKBASE}"/${MY_PNVR}
 
 src_prepare() {
+    cd "${WORK}"
     rm Makefile Makefile.in || die "removing makefiles failed"
 }
 

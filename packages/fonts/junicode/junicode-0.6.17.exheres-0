@@ -3,7 +3,7 @@
 # Based in part upon 'corefonts-1.exheres-0' which is
 #   Copyright 2008 Richard Brown
 
-require sourceforge [ project=junicode suffix=zip pnv=${PV//./-} ]
+require sourceforge [ project=junicode suffix=zip pv=$(ever replace_all -) ]
 
 SUMMARY="Junius-Unicode font for medievalists."
 
