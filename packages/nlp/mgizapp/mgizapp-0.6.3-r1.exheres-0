@@ -15,7 +15,7 @@ DEPENDENCIES="
     build:
         dev-libs/boost
     build+run:
-        !nlp/giza-pp [[
+        !nlp/giza-pp[mkcls] [[
             description = [ both supply the mkcls binary ]
             resolution = uninstall-blocked-after
         ]]
