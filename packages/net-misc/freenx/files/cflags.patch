@@ -1,3 +1,6 @@
+Source: Gentoo, modified by Florian Petran
+Upstream: no
+Reason: make build honor user defined CFLAGS
 --- nx-session-launcher/Makefile.orig	2011-03-18 16:40:30.587015000 +0000
 +++ nx-session-launcher/Makefile	2011-03-18 16:40:46.040014998 +0000
 @@ -1,7 +1,6 @@

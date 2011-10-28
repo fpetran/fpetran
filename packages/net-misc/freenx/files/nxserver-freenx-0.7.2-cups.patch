@@ -1,3 +1,6 @@
+Source: from Gentoo
+Upstream: no
+Reason: Fix paths to cups and foomatic binaries
 diff -Naur freenx-0.7.1.orig/node.conf.sample freenx-0.7.1/node.conf.sample
 --- freenx-0.7.1.orig/node.conf.sample	2007-10-31 13:47:45.000000000 +0100
 +++ freenx-0.7.1/node.conf.sample	2007-10-31 13:48:35.000000000 +0100

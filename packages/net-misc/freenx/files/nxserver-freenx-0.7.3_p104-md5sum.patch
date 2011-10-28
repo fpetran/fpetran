@@ -1,3 +1,6 @@
+Source: from Gentoo
+Upstream: no
+Reason: use md5sum binary instead of openssl to generate md5 hash
 diff -Naur freenx-server.orig//node.conf.sample freenx-server/node.conf.sample
 --- freenx-server.orig//node.conf.sample	2010-07-19 17:01:24.146731690 +0200
 +++ freenx-server/node.conf.sample	2010-07-19 17:03:04.910481227 +0200

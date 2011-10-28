@@ -46,18 +46,6 @@ DEPENDENCIES="
 WORK="${WORKBASE}"/${PN}-X11
 
 src_prepare() {
-    cd "${WORKBASE}"/nxproxy
-    expatch -p0 "${FILES}"/${PN}-3.2.0-nxproxy_read_from_stdin.patch
-
-    cd "${WORKBASE}"/nxcomp
-    expatch -p0 "${FILES}"/${PN}-2.1.0-invalid-options.patch
-    expatch -p0 "${FILES}"/${PN}-3.3.0-nxcomp-glibc2.10.patch
-
-    cd "${WORKBASE}"
-    expatch -p0 "${FILES}"/nx-x11-1.5.0-tmp-exec.patch
-    expatch -p0 "${FILES}"/nxcomp-1.5.0-pic.patch
-    expatch -p0 "${FILES}"/${PN}-3.3.0-cflags.patch
-
     for s in nxcomp nxcompext nxcompshad nxproxy; do
         cd "${WORKBASE}"/${s}
         eautoreconf ${s}
@@ -86,8 +74,7 @@ src_compile() {
     done
 
     cd "${WORK}" || die "No nx-X11 directory found"
-    unset MAKE_OPTS
-    FAST=1 emake -j1 World WORLDOPTS="" MAKE="make"
+    emake World
 
     cd "${WORKBASE}"/nxcompext || die "No nxcompext directory found"
     emake

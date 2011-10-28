@@ -40,29 +40,21 @@ DEPENDENCIES="
 WORK="${WORKBASE}"/${PN}-server-${PV}
 
 DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}/nxserver-freenx-${PV}_p104-pam_ssh.patch"
-    "${FILES}/nxserver-freenx-${PV}_p104-nxnode_setup_samba.patch"
     "${FILES}/nxserver-freenx-0.7.2-cups.patch"
-    "${FILES}/nxserver-freenx-${PV}_p104-jobserver_fix.patch"
     "${FILES}/nxserver-freenx-${PV}_p104-md5sum.patch"
+    "${FILES}/nxloadconfig.patch"
+    "${FILES}/cflags.patch"
 )
 
 src_prepare() {
     default
 
     cd "${WORK}"
-    # TODO assess usefulness of the following failing Gentoo patches
-    # missing from nxloadconfig patch:
-    #  COMMAND_GDM_XSESSION=/etc/X11/Sessions/Xsession
-    #  COMMAND_NXAGENT=REAL_PATH_LIB/nxagent
-    #
-    expatch -p0 "${FILES}/nxloadconfig.patch"
-    expatch -p0 "${FILES}/cflags.patch"
 
-    sed -e "/PATH_LIB=/s/lib/${LIBDIR}/g" \
+    edo sed -e "/PATH_LIB=/s/lib/${LIBDIR}/g" \
         -e "s#REAL_PATH_LIB#/usr/${LIBDIR}/NX/bin#" \
         -e "s#3.\[0123\].0#3.\[01234\].0#g" \
-        -i nxloadconfig || die "nxloadconfig sed failed"
+        -i nxloadconfig
 }
 
 src_compile() {

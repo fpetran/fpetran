@@ -1,3 +1,6 @@
+Source: from Gentoo, modified by Florian Petran
+Upstream: no
+Reason: fix paths to NX library and Xsessions, use symlinks for preload
 --- nxloadconfig.orig	2011-03-18 16:28:49.606015001 +0000
 +++ nxloadconfig	2011-03-18 16:35:25.495014997 +0000
 @@ -58,7 +58,7 @@
