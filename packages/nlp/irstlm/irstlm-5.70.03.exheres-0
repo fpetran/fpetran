@@ -1,0 +1,20 @@
+# Copyright 2011 Florian Petran
+# Distributed under the terms of the GNU General Public License v2
+
+require sourceforge [ project=irstlm suffix=tgz ]
+
+SUMMARY="A tool for the estimation, representation, and computation of statistical language models."
+HOMEPAGE="http://hlt.fbk.eu/en/irstlm"
+
+LICENCES="LGPL-2.1"
+SLOT="0"
+PLATFORMS="~amd64"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    -p1 "${FILES}/scripts_install.patch"
+)
+
+src_configure() {
+    sh regenerate-makefiles.sh
+    default
+}
