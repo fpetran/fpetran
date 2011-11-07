@@ -65,7 +65,7 @@ src_install() {
     export NX_ETC_DIR=/etc/nxserver
     export NX_SESS_DIR=/var/lib/nxserver/db
 
-    emake DESTDIR="${IMAGE}" install
+    default
 
     option nxclient && edo rm "${IMAGE}"/usr/bin/nxprint
 

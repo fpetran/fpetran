@@ -62,21 +62,21 @@ src_prepare() {
 
 src_configure() {
     for s in nxcomp nxcompshad nxproxy nxcompext; do
-        cd "${WORKBASE}"/${s} || die "No ${s} directory found"
+        edo cd "${WORKBASE}"/${s}
         econf --hates=docdir
     done
 }
 
 src_compile() {
     for s in nxcomp nxcompshad nxproxy; do
-        cd "${WORKBASE}"/${s} || die "No ${s} directory found"
+        edo cd "${WORKBASE}"/${s}
         emake
     done
 
-    cd "${WORK}" || die "No nx-X11 directory found"
+    edo cd "${WORK}"
     emake World
 
-    cd "${WORKBASE}"/nxcompext || die "No nxcompext directory found"
+    edo cd "${WORKBASE}"/nxcompext
     emake
 }
 
