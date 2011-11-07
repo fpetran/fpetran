@@ -47,7 +47,6 @@ DEFAULT_SRC_PREPARE_PATCHES=(
 src_prepare() {
     default
 
-    cd "${WORK}"
     expatch -p0 "${FILES}/nxloadconfig.patch"
     expatch -p0 "${FILES}/cflags.patch"
 
@@ -68,14 +67,14 @@ src_install() {
 
     emake DESTDIR="${IMAGE}" install
 
-    option nxclient && rm "${IMAGE}"/usr/bin/nxprint
+    option nxclient && edo rm "${IMAGE}"/usr/bin/nxprint
 
-    mv "${IMAGE}"/etc/nxserver/node.conf.sample "${IMAGE}"/etc/nxserver/node.conf
+    edo mv "${IMAGE}"/etc/nxserver/node.conf.sample "${IMAGE}"/etc/nxserver/node.conf
 
     dodir ${NX_ETC_DIR}
     for x in passwords passwords.orig ; do
-        touch "${IMAGE}"${NX_ETC_DIR}/$x
-        chmod 600 "${IMAGE}"${NX_ETC_DIR}/$x
+        edo touch "${IMAGE}"${NX_ETC_DIR}/$x
+        edo chmod 600 "${IMAGE}"${NX_ETC_DIR}/$x
     done
 
     dodir ${NX_HOME}

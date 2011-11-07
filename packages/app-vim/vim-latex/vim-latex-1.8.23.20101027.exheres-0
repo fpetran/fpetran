@@ -17,8 +17,7 @@ MYOPTIONS="doc"
 WORK="${WORKBASE}"/${MY_PNVR}
 
 src_prepare() {
-    cd "${WORK}"
-    rm Makefile Makefile.in || die "removing makefiles failed"
+    edo rm Makefile Makefile.in
 }
 
 src_install() {
