@@ -50,5 +50,5 @@ src_configure() {
 
 src_install() {
     default
-    option systemd && install_systemd_files
+    install_systemd_files
 }

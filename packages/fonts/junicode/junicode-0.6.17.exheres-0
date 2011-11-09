@@ -15,7 +15,7 @@ MYOPTIONS=""
 WORK="${WORKBASE}"/${PN}
 
 src_install() {
-    cd "${WORK}"/fonts
+    pushd "${WORK}"/fonts
     insinto /usr/share/fonts/X11/${PN}
     doins *.ttf
 }

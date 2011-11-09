@@ -47,11 +47,12 @@ WORK="${WORKBASE}"/${PN}-X11
 
 src_prepare() {
     for s in nxcomp nxcompext nxcompshad nxproxy; do
-        cd "${WORKBASE}"/${s}
+        pushd "${WORKBASE}"/${s}
         eautoreconf ${s}
-        cd "${WORKBASE}"
+        popd
     done
 
+    pushd "${WORKBASE}"
     echo "#define CcCmd ${CC}" >> "${WORK}"/config/cf/host.def
     echo "#define OptimizedCDebugFlags ${CFLAGS} GccAliasingArgs" >> "${WORK}"/config/cf/host.def
     echo "#define OptimizedCplusplusDebugFlags ${CXXFLAGS} GccAliasingArgs" >> "${WORK}"/config/cf/host.def
@@ -62,21 +63,21 @@ src_prepare() {
 
 src_configure() {
     for s in nxcomp nxcompshad nxproxy nxcompext; do
-        edo cd "${WORKBASE}"/${s}
+        pushd "${WORKBASE}"/${s}
         econf --hates=docdir
     done
 }
 
 src_compile() {
     for s in nxcomp nxcompshad nxproxy; do
-        edo cd "${WORKBASE}"/${s}
+        pushd "${WORKBASE}"/${s}
         emake
     done
 
-    edo cd "${WORK}"
+    popd
     emake World
 
-    edo cd "${WORKBASE}"/nxcompext
+    pushd "${WORKBASE}"/nxcompext
     emake
 }
 

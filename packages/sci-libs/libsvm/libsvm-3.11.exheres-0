@@ -1,8 +1,6 @@
 # Copyright 2011 Florian Petran
 # Distributed under the terms of the GNU General Public License v2
 
-# TODO: java, python interfaces
-
 SUMMARY="A library for Support Vector Machines"
 HOMEPAGE="http://www.csie.ntu.edu.tw/~cjlin/libsvm/"
 DOWNLOADS="http://www.csie.ntu.edu.tw/~cjlin/${PN}/${PNV}.tar.gz"
@@ -32,13 +30,13 @@ src_compile() {
     emake lib
 
     if option qt4; then
-        cd "${WORK}"/svm-toy/qt
+        pushd "${WORK}"/svm-toy/qt
         edo sed -i "s%\(-lQtGui\)%-L/usr/${LIBDIR}/qt4 \1%" Makefile
         emake
     fi
 
     if option gtk; then
-        cd "${WORK}"/svm-toy/gtk
+        pushd "${WORK}"/svm-toy/gtk
         emake
     fi
 }
