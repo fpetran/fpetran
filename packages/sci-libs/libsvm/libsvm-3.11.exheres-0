@@ -10,25 +10,22 @@ LICENCES="as-is"
 SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS="
-    tools [[ description = [ install wrapper scripts for easier usage ] ]]
     (
-        qt4
         gtk
-    ) [[ number-selected = at-most-one ]]
+        qt4
+    ) [[
+        number-selected = at-most-one
+    ]]
+    tools [[ description = [ install wrapper scripts for easier usage ] ]]
 "
 
 DEPENDENCIES="
-    build:
     build+run:
-        qt4? ( x11-libs/qt:= )
         gtk? ( x11-libs/gtk+:= )
+        qt4? ( x11-libs/qt:= )
     run:
         tools? ( dev-lang/python:* )
 "
-
-DEFAULT_SRC_CONFIGURE_PARAMS=( )
-DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( )
-DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( )
 
 src_compile() {
     default
@@ -62,7 +59,6 @@ src_install() {
 
     dolib libsvm.so.2
     dosym libsvm.so.2 /usr/${LIBDIR}/libsvm.so
-
 
     insinto /usr/include/svm
     doins svm.h
