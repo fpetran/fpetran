@@ -11,13 +11,13 @@ HOMEPAGE="http://www.nomachine.com/documents.php"
 NOMACHINE_BASE="http://web04.nomachine.com/download/${PV}/sources"
 
 DOWNLOADS="
-    ${NOMACHINE_BASE}/nx-X11-${PV}-3.tar.gz
-    ${NOMACHINE_BASE}/nxagent-${PV}-11.tar.gz
+    ${NOMACHINE_BASE}/nx-X11-${PV}-2.tar.gz
+    ${NOMACHINE_BASE}/nxagent-${PV}-5.tar.gz
     ${NOMACHINE_BASE}/nxauth-${PV}-1.tar.gz
-    ${NOMACHINE_BASE}/nxcomp-${PV}-1.tar.gz
+    ${NOMACHINE_BASE}/nxcomp-${PV}-2.tar.gz
     ${NOMACHINE_BASE}/nxcompext-${PV}-1.tar.gz
-    ${NOMACHINE_BASE}/nxcompshad-${PV}-3.tar.gz
-    ${NOMACHINE_BASE}/nxproxy-${PV}-2.tar.gz
+    ${NOMACHINE_BASE}/nxcompshad-${PV}-2.tar.gz
+    ${NOMACHINE_BASE}/nxproxy-${PV}-1.tar.gz
 "
 
 LICENCES="GPL-2"
@@ -46,13 +46,14 @@ DEPENDENCIES="
 WORK="${WORKBASE}"/${PN}-X11
 
 src_prepare() {
+    pushd "${WORKBASE}"
+
     for s in nxcomp nxcompext nxcompshad nxproxy; do
         pushd "${WORKBASE}"/${s}
         eautoreconf ${s}
         popd
     done
 
-    pushd "${WORKBASE}"
     echo "#define CcCmd ${CC}" >> "${WORK}"/config/cf/host.def
     echo "#define OptimizedCDebugFlags ${CFLAGS} GccAliasingArgs" >> "${WORK}"/config/cf/host.def
     echo "#define OptimizedCplusplusDebugFlags ${CXXFLAGS} GccAliasingArgs" >> "${WORK}"/config/cf/host.def
@@ -65,6 +66,7 @@ src_configure() {
     for s in nxcomp nxcompshad nxproxy nxcompext; do
         pushd "${WORKBASE}"/${s}
         econf --hates=docdir
+        popd
     done
 }
 
@@ -72,9 +74,9 @@ src_compile() {
     for s in nxcomp nxcompshad nxproxy; do
         pushd "${WORKBASE}"/${s}
         emake
+        popd
     done
 
-    popd
     emake World
 
     pushd "${WORKBASE}"/nxcompext

@@ -33,11 +33,13 @@ src_compile() {
         pushd "${WORK}"/svm-toy/qt
         edo sed -i "s%\(-lQtGui\)%-L/usr/${LIBDIR}/qt4 \1%" Makefile
         emake
+        popd
     fi
 
     if option gtk; then
         pushd "${WORK}"/svm-toy/gtk
         emake
+        popd
     fi
 }
 
