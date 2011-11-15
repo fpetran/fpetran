@@ -5,6 +5,7 @@ After=network.target
 [Service]
 ExecStart=/usr/bin/nxserver --start >/dev/null 2>&1
 ExecStop=/usr/bin/nxserver --stop >/dev/null 2>&1
+Type=oneshot
 
 [Install]
 WantedBy=multi-user.target
