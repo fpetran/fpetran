@@ -14,17 +14,18 @@ LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS="
-    trainGIZA [[ description = [ Use trainGIZA script for training the model ] ]]
     mkcls [[ description = [ Install the mkcls binary for making word classes ] ]]
+    trainGIZA [[ description = [ Use trainGIZA script for training the model ] ]]
 "
 
 DEPENDENCIES="
-    mkcls? (
-        !nlp/mgizapp [[
-            description = [ both supply the mkcls binary ]
-            resolution = uninstall-blocked-after
-        ]]
-    )
+    build+run:
+        mkcls? (
+            !nlp/mgizapp [[
+                description = [ both supply the mkcls binary ]
+                resolution = uninstall-blocked-after
+            ]]
+        )
     run:
         trainGIZA? ( app-shells/tcsh )
 "
@@ -34,7 +35,7 @@ WORK="${WORKBASE}"/${PN}
 src_install() {
     option mkcls && dobin mkcls-v2/mkcls
 
-    pushd "${WORK}"/GIZA++-v2
+    cd "${WORK}"/GIZA++-v2
 
     dobin GIZA++ plain2snt.out snt2cooc.out snt2plain.out
     option trainGIZA && dobin "${WORK}"/GIZA++-v2/trainGIZA++.sh

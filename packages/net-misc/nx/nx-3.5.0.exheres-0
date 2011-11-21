@@ -46,7 +46,7 @@ DEPENDENCIES="
 WORK="${WORKBASE}"/${PN}-X11
 
 src_prepare() {
-    pushd "${WORKBASE}"
+    cd "${WORKBASE}"
 
     for s in nxcomp nxcompext nxcompshad nxproxy; do
         pushd "${WORKBASE}"/${s}
@@ -79,7 +79,7 @@ src_compile() {
 
     emake World
 
-    pushd "${WORKBASE}"/nxcompext
+    cd "${WORKBASE}"/nxcompext
     emake
 }
 
@@ -102,14 +102,14 @@ src_install() {
     done
 
     into ${NX_ROOT}
-    dobin "${WORK}"/programs/Xserver/nxagent
-    dobin "${WORK}"/programs/nxauth/nxauth
-    dobin "${WORKBASE}"/nxproxy/nxproxy
+    dobin "${WORK}"/programs/Xserver/nxagent \
+     "${WORK}"/programs/nxauth/nxauth \
+     "${WORKBASE}"/nxproxy/nxproxy
 
-    dolib "${WORK}"/lib/X11/libX11.so*
-    dolib "${WORK}"/lib/Xext/libXext.so*
-    dolib "${WORK}"/lib/Xrender/libXrender.so*
-    dolib "${WORKBASE}"/nxcomp/libXcomp.so*
-    dolib "${WORKBASE}"/nxcompext/libXcompext.so*
-    dolib "${WORKBASE}"/nxcompshad/libXcompshad.so*
+    dolib "${WORK}"/lib/X11/libX11.so* \
+     "${WORK}"/lib/Xext/libXext.so* \
+     "${WORK}"/lib/Xrender/libXrender.so* \
+     "${WORKBASE}"/nxcomp/libXcomp.so* \
+     "${WORKBASE}"/nxcompext/libXcompext.so* \
+     "${WORKBASE}"/nxcompshad/libXcompshad.so*
 }
