@@ -20,3 +20,4 @@ DEPENDENCIES="
 pkg_postinst() {
     elog "You'll have to take care of installing a Latex/Bibtex distribution by yourself for now."
 }
+

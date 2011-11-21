@@ -44,3 +44,4 @@ pkg_postinst() {
     elog "  let g:tex_flavor='latex'"
     elog
 }
+

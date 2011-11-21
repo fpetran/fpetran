@@ -113,3 +113,4 @@ src_install() {
      "${WORKBASE}"/nxcompext/libXcompext.so* \
      "${WORKBASE}"/nxcompshad/libXcompshad.so*
 }
+

@@ -19,3 +19,4 @@ src_prepare() {
     sh regenerate-makefiles.sh
     default
 }
+

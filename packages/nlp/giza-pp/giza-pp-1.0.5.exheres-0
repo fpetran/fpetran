@@ -41,3 +41,4 @@ src_install() {
     option trainGIZA && dobin "${WORK}"/GIZA++-v2/trainGIZA++.sh
     emagicdocs
 }
+

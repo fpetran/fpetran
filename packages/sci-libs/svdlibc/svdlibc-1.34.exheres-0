@@ -30,3 +30,4 @@ src_install() {
     insinto /usr/include
     doins svdlib.h
 }
+

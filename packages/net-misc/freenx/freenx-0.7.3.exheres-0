@@ -105,3 +105,4 @@ pkg_postinst() {
     elog "already running, you have to edit ${NX_ETC_DIR}/node.conf"
     elog "and change DISPLAY_BASE from 1000 (Server :0) to something else."
 }
+
