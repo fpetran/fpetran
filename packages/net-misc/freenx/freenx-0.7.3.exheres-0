@@ -45,8 +45,8 @@ DEFAULT_SRC_PREPARE_PATCHES=(
 )
 
 DEFAULT_SRC_COMPILE_PARAMS=(
-    "CC='${CC}'"
-    "CDEBUGFLAGS='${CFLAGS}'"
+    "CC=${CC}"
+    "CDEBUGFLAGS=${CFLAGS}"
 )
 
 src_prepare() {
