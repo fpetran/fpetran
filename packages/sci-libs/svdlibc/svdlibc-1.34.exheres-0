@@ -18,7 +18,7 @@ WORK="${WORKBASE}"/SVDLIBC
 DEFAULT_SRC_COMPILE_PARAMS=( "HOSTTYPE=linux" )
 
 src_prepare() {
-    edo sed -i "s/gcc.\+$/gcc/" Makefile
+    edo sed -i 's/gcc.\+$/gcc/' Makefile
 }
 
 src_install() {
