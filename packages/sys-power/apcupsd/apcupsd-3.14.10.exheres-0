@@ -25,7 +25,7 @@ src_configure() {
         --hates=docdir \
         --sbindir=/sbin \
         --sysconfdir=/etc/apcupsd \
-        --with-pwrfail-dir=/etc/apcuspd \
+        --with-pwrfail-dir=/etc/apcupsd \
         --with-lock-dir=/run/lock \
         --with-pid-dir=/run \
         --with-log-dir=/var/log \

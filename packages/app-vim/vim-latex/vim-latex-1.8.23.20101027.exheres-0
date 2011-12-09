@@ -5,7 +5,7 @@
 
 MY_PR="1112"
 MY_PNVR=${PN}-$(ever replace 3 -)-r${MY_PR}
-require vim-plugin sourceforge [ project=vim-latex suffix=tar.gz pnv=${MY_PNVR} ]
+require vim-plugin sourceforge [ suffix=tar.gz pnv=${MY_PNVR} ]
 
 SUMMARY="A comprehensive set of tools to view, edit and compile LaTeX documents."
 
@@ -23,12 +23,12 @@ src_prepare() {
 src_install() {
     dodoc -r doc/
 
-    edo mv doc mydoc
-    edo mkdir doc
-    edo mv mydoc/*.txt doc
-    edo rm -fr mydoc
+    #edo mv doc mydoc
+    #edo mkdir doc
+    #edo mv mydoc/*.txt doc
+    #edo rm -fr mydoc
 
-    edo rm latextags ltags
+    #edo rm latextags ltags
 
     vim-plugin_src_install
 
