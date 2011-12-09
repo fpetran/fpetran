@@ -22,36 +22,36 @@ DEPENDENCIES="
 
 src_configure() {
     local myconf=(
-        --hates=docdir \
-        --sbindir=/sbin \
-        --sysconfdir=/etc/apcupsd \
-        --with-pwrfail-dir=/etc/apcupsd \
-        --with-lock-dir=/run/lock \
-        --with-pid-dir=/run \
-        --with-log-dir=/var/log \
-        --with-nis-port=3551 \
-        --enable-net \
-        --enable-pcnet \
-        $(option_enable usb) \
-        $(option_enable snmp) \
-        $(option_enable gnome gapcmon) \
+        --hates=docdir
+        --sbindir=/sbin
+        --sysconfdir=/etc/apcupsd
+        --with-pwrfail-dir=/etc/apcupsd
+        --with-lock-dir=/run/lock
+        --with-pid-dir=/run
+        --with-log-dir=/var/log
+        --with-nis-port=3551
+        --enable-net
+        --enable-pcnet
+        $(option_enable usb)
+        $(option_enable snmp)
+        $(option_enable gnome gapcmon)
     )
 
     option usb && \
-        myconf=( ${myconf[@]} \
-                 "--with-upstype=usb" \
-                 "--with-upscable=usb" \
+        myconf=( ${myconf[@]}
+                 --with-upstype=usb
+                 --with-upscable=usb
                  "--with-dev= " )
 
     option usb || \
         myconf=( ${myconf[@]} \
-                 "--with-upstype=apcsmart" \
-                 "--with-upscable=smart" )
+                 --with-upstype=apcsmart
+                 --with-upscable=smart )
 
     option cgi && \
-        myconf=( ${myconf[@]} \
-                 $(option_enable cgi) \
-                 "--with-cgi-bin=/usr/libexec/${PN}/cgi-bin" )
+        myconf=( ${myconf[@]}
+                 $(option_enable cgi)
+                 --with-cgi-bin=/usr/libexec/${PN}/cgi-bin )
 
     LD="${CC}" econf \
                 ${myconf[@]} \

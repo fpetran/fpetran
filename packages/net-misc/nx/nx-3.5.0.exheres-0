@@ -48,12 +48,6 @@ WORK="${WORKBASE}"/${PN}-X11
 src_prepare() {
     cd "${WORKBASE}"
 
-    #for s in nxcomp nxcompext nxcompshad nxproxy; do
-        #edo pushd "${WORKBASE}"/${s}
-        #eautoreconf ${s}
-        #edo popd
-    #done
-
     echo "#define CcCmd ${CC}" >> "${WORK}"/config/cf/host.def
     echo "#define OptimizedCDebugFlags ${CFLAGS} GccAliasingArgs" >> "${WORK}"/config/cf/host.def
     echo "#define OptimizedCplusplusDebugFlags ${CXXFLAGS} GccAliasingArgs" >> "${WORK}"/config/cf/host.def
