@@ -23,13 +23,6 @@ src_prepare() {
 src_install() {
     dodoc -r doc/
 
-    #edo mv doc mydoc
-    #edo mkdir doc
-    #edo mv mydoc/*.txt doc
-    #edo rm -fr mydoc
-
-    #edo rm latextags ltags
-
     vim-plugin_src_install
 
 }
