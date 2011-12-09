@@ -49,9 +49,9 @@ src_prepare() {
     cd "${WORKBASE}"
 
     for s in nxcomp nxcompext nxcompshad nxproxy; do
-        pushd "${WORKBASE}"/${s}
+        edo pushd "${WORKBASE}"/${s}
         eautoreconf ${s}
-        popd
+        edo popd
     done
 
     echo "#define CcCmd ${CC}" >> "${WORK}"/config/cf/host.def
@@ -64,22 +64,22 @@ src_prepare() {
 
 src_configure() {
     for s in nxcomp nxcompshad nxproxy nxcompext; do
-        pushd "${WORKBASE}"/${s}
+        edo pushd "${WORKBASE}"/${s}
         econf --hates=docdir
-        popd
+        edo popd
     done
 }
 
 src_compile() {
     for s in nxcomp nxcompshad nxproxy; do
-        pushd "${WORKBASE}"/${s}
+        edo pushd "${WORKBASE}"/${s}
         emake
-        popd
+        edo popd
     done
 
     emake World
 
-    cd "${WORKBASE}"/nxcompext
+    edo cd "${WORKBASE}"/nxcompext
     emake
 }
 
@@ -90,7 +90,7 @@ src_install() {
         herebin ${x} <<- EOF
 		#!/bin/sh
 		cd ${NX_ROOT}/bin
-		if [ -n ${NX_ROOT}/${LIBDIR} ]; then
+		if [[ -n ${NX_ROOT}/${LIBDIR} ]]; then
 		    if [ "\${LD_LIBRARY_PATH+set}" = "set" ]; then
 		        export LD_LIBRARY_PATH="\${LD_LIBRARY_PATH}:${NX_ROOT}/${LIBDIR}"
 		    else

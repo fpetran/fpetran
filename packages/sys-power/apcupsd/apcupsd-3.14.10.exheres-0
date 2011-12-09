@@ -21,30 +21,41 @@ DEPENDENCIES="
 "
 
 src_configure() {
-
-    LD="${CC}" econf \
+    local myconf=(
         --hates=docdir \
         --sbindir=/sbin \
         --sysconfdir=/etc/apcupsd \
-        --with-pwrfail-dir=/etc/apcupsd \
+        --with-pwrfail-dir=/etc/apcuspd \
         --with-lock-dir=/run/lock \
         --with-pid-dir=/run \
         --with-log-dir=/var/log \
         --with-nis-port=3551 \
         --enable-net \
         --enable-pcnet \
-        $(option_enable usb) $(option_enable snmp) \
+        $(option_enable usb) \
+        $(option_enable snmp) \
         $(option_enable gnome gapcmon) \
-        $(if option usb; then\
-            echo "--with-upstype=usb --with-upscable=usb --with-dev= "; \
-          else
-            echo "--with-upstype=apcsmart --with-upscable=smart"; \
-          fi)\
-        $(if option cgi; then \
-            option_enable cgi; \
-            echo "--with-cgi-bin=/usr/libexec/${PN}/cgi-bin"; \
-        fi) \
-        APCUPSD_MAIL=/usr/sbin/sendmail
+    )
+
+    option usb && \
+        myconf=( ${myconf[@]} \
+                 "--with-upstype=usb" \
+                 "--with-upscable=usb" \
+                 "--with-dev= " )
+
+    option usb || \
+        myconf=( ${myconf[@]} \
+                 "--with-upstype=apcsmart" \
+                 "--with-upscable=smart" )
+
+    option cgi && \
+        myconf=( ${myconf[@]} \
+                 $(option_enable cgi) \
+                 "--with-cgi-bin=/usr/libexec/${PN}/cgi-bin" )
+
+    LD="${CC}" econf \
+                ${myconf[@]} \
+                APCUPSD_MAIL=/usr/sbin/sendmail
 
 }
 

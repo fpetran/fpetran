@@ -44,6 +44,11 @@ DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/nxserver-freenx-${PV}_p104-md5sum.patch"
 )
 
+DEFAULT_SRC_COMPILE_PARAMS=(
+    "CC='${CC}'"
+    "CDEBUGFLAGS='${CFLAGS}'"
+)
+
 src_prepare() {
     default
 
@@ -54,10 +59,6 @@ src_prepare() {
         -e "s#REAL_PATH_LIB#/usr/${LIBDIR}/NX/bin#" \
         -e "s#3.\[0123\].0#3.\[01234\].0#g" \
         -i nxloadconfig
-}
-
-src_compile() {
-    emake CC="${CC}" CDEBUGFLAGS="${CFLAGS}"
 }
 
 src_install() {

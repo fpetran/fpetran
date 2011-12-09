@@ -12,7 +12,7 @@ SUMMARY="A comprehensive set of tools to view, edit and compile LaTeX documents.
 LICENCES="vim"
 SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS="doc"
+MYOPTIONS=""
 
 WORK="${WORKBASE}"/${MY_PNVR}
 
@@ -21,7 +21,7 @@ src_prepare() {
 }
 
 src_install() {
-    option doc && dodoc -r doc/
+    dodoc -r doc/
 
     edo mv doc mydoc
     edo mkdir doc

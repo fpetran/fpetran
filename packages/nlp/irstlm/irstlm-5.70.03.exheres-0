@@ -16,7 +16,7 @@ DEFAULT_SRC_PREPARE_PATCHES=(
 )
 
 src_prepare() {
-    sh regenerate-makefiles.sh
+    edo bash regenerate-makefiles.sh
     default
 }
 

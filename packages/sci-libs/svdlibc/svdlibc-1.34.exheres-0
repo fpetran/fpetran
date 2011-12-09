@@ -15,12 +15,10 @@ MYOPTIONS=""
 
 WORK="${WORKBASE}"/SVDLIBC
 
-src_prepare() {
-    edo sed -i "s/gcc.\+$/gcc/" Makefile
-}
+DEFAULT_SRC_COMPILE_PARAMS=( "HOSTTYPE=linux" )
 
-src_compile() {
-    emake HOSTTYPE=linux
+src_prepare() {
+    edo sed -i "s/gcc.\+'$'/gcc/" Makefile
 }
 
 src_install() {

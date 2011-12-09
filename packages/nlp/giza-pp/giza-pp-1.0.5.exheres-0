@@ -35,7 +35,7 @@ WORK="${WORKBASE}"/${PN}
 src_install() {
     option mkcls && dobin mkcls-v2/mkcls
 
-    cd "${WORK}"/GIZA++-v2
+    edo cd "${WORK}"/GIZA++-v2
 
     dobin GIZA++ plain2snt.out snt2cooc.out snt2plain.out
     option trainGIZA && dobin "${WORK}"/GIZA++-v2/trainGIZA++.sh
