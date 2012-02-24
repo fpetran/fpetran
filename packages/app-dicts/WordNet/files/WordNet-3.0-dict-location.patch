@@ -1,3 +1,6 @@
+Source: from Gentoo
+Upstream: no
+Reason: make dict location honor filesystem conventions
 diff -Naur WordNet-3.0.orig/include/wn.h WordNet-3.0/include/wn.h
 --- WordNet-3.0.orig/include/wn.h	2007-01-03 22:51:35.000000000 +0100
 +++ WordNet-3.0/include/wn.h	2007-08-04 22:58:44.000000000 +0200
