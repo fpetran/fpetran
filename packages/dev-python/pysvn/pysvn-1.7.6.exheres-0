@@ -1,0 +1,68 @@
+# Copyright 2012 Florian Petran
+# Distributed under the terms of the GNU General Public License v2
+#   partly based on pysvn-1.7.6.ebuild, which is
+#   Copyright 1999-2012 Gentoo Foundation
+
+require distutils python
+
+SUMMARY="Enable tools to be written in Python that use Subversion."
+HOMEPAGE="http://pysvn.tigris.org"
+DOWNLOADS="http://pysvn.barrys-emacs.org/source_kits/${PNV}.tar.gz"
+
+LICENCES="Apache-1.1"
+SLOT="0"
+PLATFORMS="~amd64"
+
+DEPENDENCIES="
+    build+run:
+        dev-scm/subversion[<1.8]
+        dev-python/setuptools[>=0.6]
+        dev-python/pycxx[>=6.2.0]
+"
+
+src_prepare() {
+    # don't use supplied pycxx copy
+    edo rm -fr Import
+
+    edo sed -e "s/PYSVN_HAS_SVN_CLIENT_CTX__CONFLICT_FUNC_16/PYSVN_HAS_SVN_CLIENT_CTX__CONFLICT_FUNC_1_6/" -i Source/pysvn_svnenv.hpp
+
+    default
+}
+
+src_configure() {
+    default
+
+    edo pushd Source
+    edo ${PYTHON} setup.py configure \
+        --pycxx-src-dir="/usr/share/python$(python_get_abi)/CXX" \
+        --apr-inc-dir="/usr/include/apr-1" \
+        --apu-inc-dir="/usr/include/apr-1" \
+        --svn-root-dir="/usr"
+    edo popd
+}
+
+src_compile() {
+    edo pushd Source
+    emake CC=${CC} CXX=${CXX}
+    edo popd
+
+    default
+}
+
+src_test() {
+    edo pushd Tests
+    LC_ALL="en_US.UTF-8" emake
+}
+
+src_install() {
+    default
+
+    edo pushd Source/pysvn
+    exeinto "$(python_get_sitedir)/pysvn"
+    doexe _pysvn*
+    insinto "$(python_get_sitedir)/pysvn"
+    doins __init__.py
+    edo popd
+
+}
+
