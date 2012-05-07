@@ -1,0 +1,57 @@
+# Copyright 2012 Florian Petran
+# Distributed under the terms of the GNU General Public License v2
+
+require distutils
+
+SUMMARY="An enhanced wiki and issue tracking system."
+HOMEPAGE="http://trac.edgewall.org"
+DOWNLOADS="http://ftp.edgewall.com/pub/trac/${PNV}.tar.gz"
+RESTRICT="test"
+
+LICENCES="BSD"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="
+    ( postgresql sqlite mysql ) [[ number-selected = at-least-one ]]
+"
+
+DEPENDENCIES="
+    build:
+    build+run:
+        dev-lang/python[>=2.5&<3.0]
+        dev-python/setuptools[>=0.6]
+        dev-python/Genshi[>=0.6&<0.7]
+    run:
+        sqlite? (
+            dev-db/sqlite[>=3.0]
+        )
+        mysql? (
+            dev-db/mysql[>=5.0]
+            dev-python/mysql-python[>=1.2.2]
+        )
+        postgresql? (
+            dev-db/postgresql[>=8.0]
+            dev-python/psycopg2
+        )
+    suggestion:
+        www-servers/apache [[
+            description = [ recommended alternative to standalone tracd ]
+        ]]
+        apache-mod/mod_wsgi [[
+            description = [ recommended way to run trac in apache ]
+        ]]
+        dev-scm/subversion[>=1.5.0][python] [[
+            description = [ needed if you want to integrate subversion ]
+        ]]
+        dev-python/Babel[>=0.9.5] [[
+            description = [ needed for localization support ]
+        ]]
+        dev-python/Pygments [[
+            description = [ needed for syntax highlighting ]
+        ]]
+        dev-python/docutils[>=0.3.9] [[
+            description = [ for WikiRestructuredText ]
+        ]]
+"
+
+

@@ -1,0 +1,25 @@
+# Copyright 2012 Florian Petran
+# Distributed under the terms of the GNU General Public License v2
+
+require sourceforge [ project=cxx suffix=tar.gz ] distutils
+
+SUMMARY="Python-C++ connection"
+
+LICENCES="BSD"
+SLOT="0"
+PLATFORMS="~amd64"
+
+DEPENDENCIES="
+    build+run:
+        dev-lang/python[>=2.5&<3.0]
+"
+
+src_prepare() {
+    expatch "${FILES}/${PN}-6.2.3-installation.patch"
+
+    # without this, pysvn is unable to find some Config.hxx
+    edo sed -e "/^#include/s:/Python[23]/:/:" -i CXX/*/*.hxx
+
+    default
+}
+
