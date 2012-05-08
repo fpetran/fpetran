@@ -1,7 +1,7 @@
 # Copyright 2011 Florian Petran
 # Distributed under the terms of the GNU General Public License v2
 
-require cmake
+require cmake [ api=2 ]
 
 SUMMARY="KDE BibTex Reference Manager"
 HOMEPAGE="http://home.gna.org/kbibtex/"
