@@ -1,11 +1,16 @@
 [Unit]
 Description=Allow users to get remote X connections via the freenx nxserver
-After=network.target
+After=local-fs.target
+Requires=sshd.service
 
 [Service]
-ExecStart=/usr/bin/nxserver --start >/dev/null 2>&1
-ExecStop=/usr/bin/nxserver --stop >/dev/null 2>&1
 Type=oneshot
+ExecStartPre=/usr/bin/nxserver --cleanup
+ExecStart=/usr/bin/nxserver --start
+ExecStop=/usr/bin/nxserver --stop
+ExecStopPost=/usr/bin/nxserver --cleanup
+StandardOutput=null
+RemainAfterExit=yes
 
 [Install]
 WantedBy=multi-user.target
