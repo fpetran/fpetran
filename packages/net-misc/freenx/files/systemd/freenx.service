@@ -5,10 +5,10 @@ Requires=sshd.service
 
 [Service]
 Type=oneshot
-ExecStartPre=/usr/bin/nxserver --cleanup
+ExecStartPre=-/usr/bin/nxserver --cleanup
 ExecStart=/usr/bin/nxserver --start
 ExecStop=/usr/bin/nxserver --stop
-ExecStopPost=/usr/bin/nxserver --cleanup
+ExecStopPost=-/usr/bin/nxserver --cleanup
 StandardOutput=null
 RemainAfterExit=yes
 
