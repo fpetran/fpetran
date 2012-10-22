@@ -23,7 +23,8 @@ DEPENDENCIES="
         x11-utils/imake
     build+run:
         dev-tcl/expect
-        net-misc/netcat
+        || ( net-misc/netcat
+             net-misc/netcat6 )
         net-misc/nx
         net-misc/openssh[pam]
         sys-apps/gawk
