@@ -1,0 +1,32 @@
+# Copyright 2012 Florian Petran
+# Distributed under the terms of the GNU General Public License v2
+#   based in part on tomcat-servlet-api-7.0.23.ebuild, which is
+#   Copyright 1999-2012 Gentoo Foundation
+
+require java [ slot=1.6 ] ant
+
+MY_P="apache-${PN/-servlet-api/}"
+SUMMARY="Tomcat Servlet API 3.0/JSP API 2.2 implementation"
+HOMEPAGE="http://tomcat.apache.org/"
+DOWNLOADS="mirror://apache/tomcat/tomcat-$(ever major ${PV})/v${PV}/src/${MY_P}-${PV}-src.tar.gz"
+
+LICENCES="Apache-2.0"
+SLOT="3.0"
+PLATFORMS="~amd64"
+
+WORK="${WORKBASE}/${MY_P}-${PV}-src/"
+
+src_prepare() {
+    cd "${WORK}"
+    edo cp "${FILES}/${SLOT}-build.xml" build.xml
+    rm -fR */*/build.xml
+    find "${WORK}" '(' -name '*.class' -o -name '*.jar' ')' -delete
+}
+
+src_install() {
+    #insinto "${ROOT}"/usr/share/${PNV}-${SLOT}/lib
+    insinto "${ROOT}"/usr/share/tomcat-7/lib
+    doins "${WORK}"/output/build/lib/*.jar
+}
+
+
