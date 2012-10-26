@@ -11,9 +11,9 @@ SLOT="0"
 PLATFORMS="~amd64"
 MYOPTIONS=""
 
-DEFAULT_SRC_PREPARE_PATCHES=(
-    -p1 "${FILES}/scripts_install.patch"
-)
+# includedir needs to be changed because of file clashes with
+# iniparser (dictionary.h)
+DEFAULT_SRC_CONFIGURE_PARAMS=( --includedir=/usr/include/${PN} )
 
 src_prepare() {
     edo bash regenerate-makefiles.sh
