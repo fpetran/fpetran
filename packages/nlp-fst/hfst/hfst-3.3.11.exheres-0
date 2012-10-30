@@ -27,13 +27,13 @@ DEPENDENCIES="
             dev-libs/libxml2[>=2.2]
         )
         openfst? (
-            nlp/openfst
+            nlp-fst/openfst
         )
         foma? (
-            nlp/foma
+            nlp-fst/foma
         )
         sfst? (
-            nlp/SFST
+            nlp-fst/SFST
         )
 "
 
