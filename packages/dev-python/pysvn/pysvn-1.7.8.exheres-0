@@ -15,7 +15,7 @@ PLATFORMS="~amd64"
 
 DEPENDENCIES="
     build+run:
-        dev-scm/subversion[<=1.8.1]
+        dev-scm/subversion[<=1.8.5]
         dev-python/setuptools[>=0.6]
         dev-python/pycxx[>=6.2.0]
 "
