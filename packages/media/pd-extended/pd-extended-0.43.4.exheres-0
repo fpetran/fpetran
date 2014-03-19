@@ -14,5 +14,5 @@ DEPENDENCIES+="
     !media/pd-vanilla
 "
 
-WORK="${WORKBASE}"/${MY_PNV}
+WORK="${WORKBASE}"/${PN}
 
