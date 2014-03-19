@@ -1,0 +1,20 @@
+# Copyright 2010 Jonathan Dahan <jedahan@gmail.com>
+# Distributed under the terms of the GNU General Public License v2
+
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.11 ] ]
+
+SUMMARY="MAX/MSP-style realtime graphical programming environment for multimedia"
+HOMEPAGE="http://puredata.info/"
+UPSTREAM_DOCUMENTATION="${HOMEPAGE}docs/"
+
+DEPENDENCIES="dev-lang/tk"
+
+LICENCES="BSD"
+SLOT="0"
+
+WORK="${WORKBASE}"/${MY_PNV}/src
+
+MYOPTIONS="alsa"
+
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( alsa )
+
