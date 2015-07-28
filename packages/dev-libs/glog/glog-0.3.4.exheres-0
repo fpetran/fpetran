@@ -1,0 +1,11 @@
+# Copyright 2015 Florian Petran
+# Distributed under the terms of the GNU General Public License v2
+
+require github [ user=google tag=v${PV} ]
+
+SUMMARY="C++ implementation of the Google logging module"
+
+LICENCES=""
+SLOT="0"
+PLATFORMS="~amd64"
+
