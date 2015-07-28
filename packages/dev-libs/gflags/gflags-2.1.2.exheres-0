@@ -1,0 +1,12 @@
+# Copyright 2015 Florian Petran
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake github [ tag=v${PV} ]
+SUMMARY="Command line flags library"
+
+LICENCES=""
+SLOT="0"
+PLATFORMS="~amd64"
+
+CMAKE_SRC_CONFIGURE_PARAMS=( -DBUILD_SHARED_LIBS=ON )
+
