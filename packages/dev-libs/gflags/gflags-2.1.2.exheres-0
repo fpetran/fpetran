@@ -4,7 +4,7 @@
 require cmake github [ tag=v${PV} ]
 SUMMARY="Command line flags library"
 
-LICENCES=""
+LICENCES="BSD-3"
 SLOT="0"
 PLATFORMS="~amd64"
 

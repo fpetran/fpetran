@@ -5,7 +5,7 @@ require github [ user=google tag=v${PV} ]
 
 SUMMARY="C++ implementation of the Google logging module"
 
-LICENCES=""
+LICENCES="BSD-3"
 SLOT="0"
 PLATFORMS="~amd64"
 
